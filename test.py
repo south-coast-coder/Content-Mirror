@@ -7,7 +7,7 @@ import json
 #from selenium.webdriver.remote.webelement import WebElement
 import time
  #add open file read ..if channel name user entered not in add flag - then search for channel name if it exists then open file adn write it otherwise exit with error
-user_search='Py con' #make this accept options from command line in future so users can tell which channels to search for
+user_search='Radio Athene' #make this accept options from command line in future so users can tell which channels to search for
 options=webdriver.ChromeOptions()
 options.set_headless
 options.binary_location=r"C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe"  # to change in future update - let user choose their browser and maybe bundle the driver/s with installation?
@@ -24,6 +24,7 @@ time.sleep(10)
 search=driver.find_element_by_xpath('//*[@id="search"]')
 search.send_keys(user_search)
 search.send_keys(Keys.RETURN)
+print("returning.....")
 time.sleep(200) #needed to add this so it waits long enough for page to load - before it was loading OLD dom
 driver.refresh()
 print("current url="+str(driver.current_url))
@@ -43,7 +44,7 @@ while True:      #this block ensures page has scrolled to bottom (and uses time 
     scroll_height = 2000
     document_height_before = driver.execute_script("return document.documentElement.scrollHeight")
     driver.execute_script(f"window.scrollTo(0, {document_height_before + scroll_height});")
-    time.sleep(1.5)
+    time.sleep(5)
     document_height_after = driver.execute_script("return  document.documentElement.scrollHeight")
     if document_height_after == document_height_before:
         break
@@ -55,6 +56,7 @@ print(videos[1].get_attribute("innerHTML"))
 print(videos[2].get_attribute("innerHTML"))
 for video in videos:
     print(video.get_attribute("innerHTML"))
+#now that is has whole page loaded and list of vids its should check this against JSON list in for loop (i,e set a true or false then for item in 'list.json' for item in ....if item..i.e check if matches ..if no match add to another list ..when done for all then get the selenium link for each and download it then conver and upload to telegram..once uploaded add to uploaded list)
 
 
 
@@ -70,3 +72,4 @@ for video in videos:
 #//*[@id="text"]
     
 
+ 
