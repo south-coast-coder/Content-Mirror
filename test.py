@@ -118,11 +118,14 @@ for video in videos[0:5]:   #Here we are going to test by downloading any videos
                 jsonFile = open(user_file, "r")  #write downloaded vid to json file so don't re-download in future
                 data = json.load(jsonFile)
                 jsonFile.close()
-                data.update({'%s' %text})
+                print("text =" + text)
+                print("length text" + str(len(text)))
+                data['videos'].append('%s' %text)
                 with open(user_file, 'r+') as f:
                             f.seek(0)        # <--- should reset file position to the beginning.
                             json.dump(data, f)
-              except:
+              except Exception as e:
+                print (e)
                 print("failed to load json file")
     else:
             print("already matched")
